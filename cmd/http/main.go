@@ -9,4 +9,6 @@ func main() {
 	)
 
 	factory.InitalizeValidator()
+	//configurator := factory.InitializeConfigurator()
+	factory.InitializeLogger()
 }

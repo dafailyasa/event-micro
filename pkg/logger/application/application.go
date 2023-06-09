@@ -28,6 +28,10 @@ func NewLogger(repo ports.LoggerRepository, val validator.ValidatorApplication) 
 	}
 }
 
+func (l Logger) Close() error {
+	return l.zap.Sync()
+}
+
 func (l Logger) Debug(msg string, args ...interface{}) {
 	l.zap.Debug(msg, args)
 	log := new(models.Log)
