@@ -1,6 +1,8 @@
 package main
 
-import "github.com/dafailyasa/event-micro/pkg/factories"
+import (
+	"github.com/dafailyasa/event-micro/pkg/factories"
+)
 
 func main() {
 	factory := factories.NewFactory(
@@ -9,6 +11,6 @@ func main() {
 	)
 
 	factory.InitalizeValidator()
-	//configurator := factory.InitializeConfigurator()
+	_ = factory.InitializeConfigurator()
 	factory.InitializeLogger()
 }
