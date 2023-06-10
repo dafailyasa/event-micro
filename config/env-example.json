@@ -10,8 +10,8 @@
     "port": "5050"
   },
   "app": {
-    "name": "My App",
-    "description": "My App Description",
+    "name": "Event Microservice",
+    "description": "Ticket Event Microservice",
     "host": "localhost:5050",
     "base_url": "/api/v1",
     "version": "0.0.1"
