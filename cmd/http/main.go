@@ -13,4 +13,6 @@ func main() {
 	factory.InitalizeValidator()
 	_ = factory.InitializeConfigurator()
 	factory.InitializeLogger()
+	factory.InitializeMongoDB()
+
 }
