@@ -1,6 +1,9 @@
 package main
 
-import "github.com/dafailyasa/event-micro/pkg/factories"
+import (
+	"github.com/dafailyasa/event-micro/pkg/factories"
+	"github.com/dafailyasa/event-micro/pkg/server"
+)
 
 func main() {
 	factory := factories.NewFactory(
@@ -9,6 +12,19 @@ func main() {
 	)
 
 	factory.InitalizeValidator()
-	//configurator := factory.InitializeConfigurator()
+	configurator := factory.InitializeConfigurator()
 	factory.InitializeLogger()
+	factory.InitializeMongoDB()
+
+	server := server.NewServer(configurator)
+
+	config, err := configurator.GetConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	err = server.Run(config.Server.Port)
+	if err != nil {
+		panic(err)
+	}
 }
