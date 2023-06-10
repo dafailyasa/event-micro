@@ -1,12 +1,16 @@
-name: golangci-lint
+name: Event Micro Workflows
 on:
   push:
     tags:
       - v*
     branches:
-      - master
+      - develop
       - main
-  pull_request:
+  pull_request: 
+    branches: 
+      - develop
+      - main
+
 permissions:
   contents: read
   # Optional: allow read access to pull request. Use with `only-new-issues` option.
@@ -22,10 +26,10 @@ jobs:
           go-version: '1.19'
           cache: false
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v3.2.0
         with:
           # Require: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
-          version: v1.53
+          version: latest
 
           # Optional: working directory, useful for monorepos
           # working-directory: somedir
