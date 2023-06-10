@@ -9,7 +9,7 @@ import (
 func (c *ConfigService) Config() error {
 	configuration := new(models.Config)
 	file, err := c.repository.GetConfigFile()
-	if err != nil {
+	if err != nill {
 		return err
 	}
 	jsonParser := json.NewDecoder(file)
