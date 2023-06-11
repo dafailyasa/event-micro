@@ -16,7 +16,9 @@ func main() {
 	factory.InitializeLogger()
 	factory.InitializeMongoDB()
 
-	server := server.NewServer(configurator)
+	userHandlers := factory.BuildEventHandlers()
+
+	server := server.NewServer(configurator, userHandlers)
 
 	config, err := configurator.GetConfig()
 	if err != nil {

@@ -5,6 +5,9 @@ import (
 	"log"
 	"time"
 
+	"github.com/dafailyasa/event-micro/internal/event/application"
+	eventHdl "github.com/dafailyasa/event-micro/internal/event/infrastructure/handlers"
+	"github.com/dafailyasa/event-micro/internal/event/infrastructure/repositories"
 	configApp "github.com/dafailyasa/event-micro/pkg/config/application"
 	configRepo "github.com/dafailyasa/event-micro/pkg/infrastructure/repositories"
 	loggerApp "github.com/dafailyasa/event-micro/pkg/logger/application"
@@ -108,4 +111,15 @@ func (f *Factory) InitializeMongoDB() *mongo.Client {
 
 	f.dbClient = client
 	return f.dbClient
+}
+
+func (f *Factory) BuildEventHandlers() *eventHdl.EventHdl {
+	configurator := f.InitializeConfigurator()
+	logger := f.InitializeLogger()
+	validator := f.InitalizeValidator()
+	dbClient := f.InitializeMongoDB()
+
+	repo := repositories.NewEventMongoDB(configurator, logger, dbClient)
+	app := application.NewUserApp(repo, validator, logger, configurator)
+	return eventHdl.NewEventHdl(app, logger)
 }
