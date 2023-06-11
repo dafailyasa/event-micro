@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	customErr "github.com/dafailyasa/event-micro/pkg/custom-error"
 	util "github.com/dafailyasa/event-micro/pkg/utils"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -17,9 +18,27 @@ type Event struct {
 	StartDate   time.Time          `json:"startDate" bson:"startDate"`
 	EndDate     time.Time          `json:"endDate" bson:"endDate"`
 	Creator     Creator            `json:"creator" bson:"creator,omitempty"`
+	CreatedAt   time.Time          `json:"createdAt" bson:"createdAt,omitempty"`
+	UpdatedAt   time.Time          `json:"UpdatedAt" bson:"UpdatedAt,omitempty"`
 }
 
 type Creator struct {
 	Avatar string `bson:"avatar"`
 	Name   string `bson:"name"`
+}
+
+func (e *Event) Validate() error {
+	var errors error
+	if !util.IsValidStringWithLength(e.Title, 5) {
+		errors = customErr.ErrTitleEvent
+	}
+
+	if !util.IsValidStringWithLength(e.Description, 10) {
+		errors = customErr.ErrDescEvent
+	}
+
+	if errors != nil {
+		return errors
+	}
+	return nil
 }

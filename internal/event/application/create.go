@@ -1,6 +1,10 @@
 package application
 
-import "github.com/dafailyasa/event-micro/internal/event/domain/models"
+import (
+	"time"
+
+	"github.com/dafailyasa/event-micro/internal/event/domain/models"
+)
 
 func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 	event := &models.Event{
@@ -11,6 +15,11 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 		Status:      createReq.Status,
 		StartDate:   createReq.StartDate,
 		EndDate:     createReq.EndDate,
+		CreatedAt:   time.Now(),
+	}
+
+	if err := app.validator.Struct(event); err != nil {
+		app.logger.Error("Error validate event", err)
 	}
 
 	err := app.repo.Save(event)
