@@ -16,13 +16,18 @@ func NewServer(config ports.ConfigApplication) *Server {
 	}
 }
 
-func (s *Server) Run(port string) error {
+func (s *Server) Run(port string, appName string) error {
 	cfg, err := s.configurator.GetConfig()
 	if err != nil {
 		return err
 	}
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		AppName:           appName,
+		ReduceMemoryUsage: true,
+		EnablePrintRoutes: true,
+	})
+
 	app.Get("/metrics", monitor.New(monitor.Config{Title: cfg.App.Name + " Metrics"}))
 
 	err = app.Listen(":" + port)

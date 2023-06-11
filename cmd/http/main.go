@@ -23,7 +23,7 @@ func main() {
 		panic(err)
 	}
 
-	err = server.Run(config.Server.Port)
+	err = server.Run(config.Server.Port, config.App.Name)
 	if err != nil {
 		panic(err)
 	}
