@@ -45,4 +45,8 @@ var (
 	ErrPasswordLength = errors.New("password must be at least 8 characters")
 	// ErrPasswordFormat is returned when a password is not valid
 	ErrPasswordFormat = errors.New("password must contain at least one uppercase letter, one lowercase letter, one number and one special character")
+	// ErrTitleEvent is return when a title event is not valid
+	ErrTitleEvent = errors.New("title mus be at least 7 characters and should not empty")
+	// ErrDescEvent is return when a desc event is not valid
+	ErrDescEvent = errors.New("description mus be at least 10 characters and should not empty")
 )
