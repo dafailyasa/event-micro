@@ -8,7 +8,7 @@ import (
 )
 
 type Event struct {
-	ID          primitive.ObjectID `json:"id" bson:"_id", omitempty`
+	ID          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Title       string             `json:"title" bson:"title"`
 	Images      []string           `json:"images" bson:"images"`
 	Description string             `json:"description" bson:"description"`
@@ -16,7 +16,7 @@ type Event struct {
 	Status      util.StatusTicket  `json"status" bson:"status"`
 	StartDate   time.Time          `json:"startDate" bson:"startDate"`
 	EndDate     time.Time          `json:"endDate" bson:"endDate"`
-	Creator     Creator            `json:"creator" bson:"creator", omitempty`
+	Creator     Creator            `json:"creator" bson:"creator,omitempty"`
 }
 
 type Creator struct {
