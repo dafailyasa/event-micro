@@ -50,7 +50,7 @@ func (f *Factory) InitalizeValidator() *valApp.Validator {
 func (f *Factory) InitializeLogger() *loggerApp.Logger {
 	if f.configurator == nil {
 		validator := f.InitalizeValidator()
-		path := f.configFilePath
+		path := f.logFilePath
 
 		repo := loggerRepo.NewCsvFile(path)
 		app := loggerApp.NewLogger(repo, validator)
@@ -110,7 +110,7 @@ func (f *Factory) InitializeMongoDB() *mongo.Client {
 	}
 
 	f.dbClient = client
-	return f.dbClient
+	return client
 }
 
 func (f *Factory) BuildEventHandlers() *eventHdl.EventHdl {
