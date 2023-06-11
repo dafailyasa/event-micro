@@ -16,14 +16,16 @@ func main() {
 	factory.InitializeLogger()
 	factory.InitializeMongoDB()
 
-	server := server.NewServer(configurator)
+	userHandlers := factory.BuildEventHandlers()
+
+	server := server.NewServer(configurator, userHandlers)
 
 	config, err := configurator.GetConfig()
 	if err != nil {
 		panic(err)
 	}
 
-	err = server.Run(config.Server.Port)
+	err = server.Run(config.Server.Port, config.App.Name)
 	if err != nil {
 		panic(err)
 	}

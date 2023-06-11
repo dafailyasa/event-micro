@@ -4,26 +4,38 @@ import (
 	"github.com/dafailyasa/event-micro/pkg/config/domain/ports"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
+
+	eventHdl "github.com/dafailyasa/event-micro/internal/event/domain/ports"
 )
 
 type Server struct {
 	configurator ports.ConfigApplication
+	event        eventHdl.EventHandlers
 }
 
-func NewServer(config ports.ConfigApplication) *Server {
+func NewServer(config ports.ConfigApplication, eventHdl eventHdl.EventHandlers) *Server {
 	return &Server{
 		configurator: config,
+		event:        eventHdl,
 	}
 }
 
-func (s *Server) Run(port string) error {
+func (s *Server) Run(port string, appName string) error {
 	cfg, err := s.configurator.GetConfig()
 	if err != nil {
 		return err
 	}
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		AppName:           appName,
+		ReduceMemoryUsage: true,
+		EnablePrintRoutes: true,
+	})
+
 	app.Get("/metrics", monitor.New(monitor.Config{Title: cfg.App.Name + " Metrics"}))
+
+	prefix := app.Group("event-micro/api", s.event.Create)
+	prefix.Post("event")
 
 	err = app.Listen(":" + port)
 	if err != nil {
