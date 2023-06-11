@@ -13,7 +13,7 @@ type Event struct {
 	Images      []string           `json:"images" bson:"images"`
 	Description string             `json:"description" bson:"description"`
 	IsActive    *bool              `json:"isActive" bson:"isActive"`
-	Status      util.StatusTicket  `json"status" bson:"status"`
+	Status      util.StatusTicket  `json:"status" bson:"status"`
 	StartDate   time.Time          `json:"startDate" bson:"startDate"`
 	EndDate     time.Time          `json:"endDate" bson:"endDate"`
 	Creator     Creator            `json:"creator" bson:"creator,omitempty"`
