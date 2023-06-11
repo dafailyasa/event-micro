@@ -19,7 +19,7 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 	}
 
 	if err := app.validator.Struct(event); err != nil {
-		app.logger.Error("Error validate event", err)
+		return err
 	}
 
 	err := app.repo.Save(event)

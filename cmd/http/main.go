@@ -7,7 +7,7 @@ import (
 
 func main() {
 	factory := factories.NewFactory(
-		"logs/log.csv",
+		"./logs/log.csv",
 		"./config/env.json",
 	)
 

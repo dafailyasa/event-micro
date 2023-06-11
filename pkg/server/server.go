@@ -34,8 +34,8 @@ func (s *Server) Run(port string, appName string) error {
 
 	app.Get("/metrics", monitor.New(monitor.Config{Title: cfg.App.Name + " Metrics"}))
 
-	prefix := app.Group("event-micro/api", s.event.Create)
-	prefix.Post("event")
+	prefix := app.Group(cfg.App.BaseURL)
+	prefix.Post("event", s.event.Create)
 
 	err = app.Listen(":" + port)
 	if err != nil {
