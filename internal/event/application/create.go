@@ -1,6 +1,7 @@
 package application
 
 import (
+	"errors"
 	"time"
 
 	"github.com/dafailyasa/event-micro/internal/event/domain/models"
@@ -22,7 +23,18 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 		return err
 	}
 
-	err := app.repo.Save(event)
+	exist, err := app.repo.FindByTitle(event.Title)
+	if err != nil {
+		app.logger.Error("Failed to find event", err)
+		return err
+	}
+
+	if exist != nil {
+		app.logger.Info("Title already use", err)
+		return errors.New("Title already use")
+	}
+
+	err = app.repo.Save(event)
 	if err != nil {
 		app.logger.Error("Failed to save event", err)
 		return err
