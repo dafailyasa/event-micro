@@ -1,0 +1,1 @@
+docker build --tag event-micro -f ./deployment/Dockerfile .
