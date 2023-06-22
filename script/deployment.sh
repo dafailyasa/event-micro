@@ -1,1 +1,1 @@
-docker build --tag go-jwt-app -f ./deployment/Dockerfile .
+docker build --tag event-micro -f ./deployment/Dockerfile .
