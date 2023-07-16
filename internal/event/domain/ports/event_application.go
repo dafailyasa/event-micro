@@ -4,4 +4,5 @@ import "github.com/dafailyasa/event-micro/internal/event/domain/models"
 
 type EventApplication interface {
 	Create(eventRequest *models.CreateEventRequest) error
+	FindById(id string) (*models.Event, error)
 }
