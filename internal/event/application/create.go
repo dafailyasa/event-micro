@@ -2,6 +2,7 @@ package application
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/dafailyasa/event-micro/internal/event/domain/models"
@@ -24,14 +25,10 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 	}
 
 	exist, err := app.repo.FindByTitle(event.Title)
-	if err != nil {
-		app.logger.Error("Failed to find event", err)
-		return err
-	}
 
 	if exist != nil {
-		app.logger.Info("Title already use", err)
-		return errors.New("Title already use")
+		msg := fmt.Sprintf("Title %s already used", event.Title)
+		return errors.New(msg)
 	}
 
 	err = app.repo.Save(event)
@@ -40,6 +37,5 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 		return err
 	}
 
-	app.logger.Info("Success create event", event)
 	return nil
 }
