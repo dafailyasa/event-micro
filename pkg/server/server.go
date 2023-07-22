@@ -41,6 +41,7 @@ func (s *Server) Run(port string, appName string) error {
 
 	event := prefix.Group("event")
 	event.Post("", s.event.Create)
+	event.Get("/search", s.event.FindEventWithPagination)
 	event.Get("/:id", s.event.FindById)
 
 	err = app.Listen(":" + port)
