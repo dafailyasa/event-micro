@@ -1,6 +1,8 @@
 package util
 
 import (
+	"math"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -10,6 +12,15 @@ type PaginationParamsStruct struct {
 	Search string
 	Sort   int
 	Skip   int
+}
+
+type PaginationResStruct struct {
+	Data        interface{} `json:"data"`
+	LastPage    int         `json:"lastPage"`
+	CurrentPage int         `json:"currentPage"`
+	ResultCount int64       `json:"resultCount"`
+	Total       int64       `json:"total"`
+	Limit       int         `json:"limit"`
 }
 
 func QueryPaginationParams(ctx *fiber.Ctx) *PaginationParamsStruct {
@@ -26,5 +37,18 @@ func QueryPaginationParams(ctx *fiber.Ctx) *PaginationParamsStruct {
 		Search: search,
 		Sort:   sort,
 		Skip:   skip,
+	}
+}
+
+func TransformPaginationRes(data interface{}, resultCount int64, total int64, query *PaginationParamsStruct) *PaginationResStruct {
+	lastPage := math.Ceil(float64(resultCount) / float64(query.Limit))
+
+	return &PaginationResStruct{
+		Data:        data,
+		LastPage:    int(lastPage),
+		CurrentPage: query.Page,
+		ResultCount: resultCount,
+		Total:       total,
+		Limit:       query.Limit,
 	}
 }

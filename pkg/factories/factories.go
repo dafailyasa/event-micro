@@ -94,10 +94,10 @@ func (f *Factory) InitializeMongoDB() *mongo.Client {
 	defer cancelFunc()
 
 	options := options.Client().
-		ApplyURI(cfg.Database.URL).
-		SetMinPoolSize(uint64(cfg.Database.PoolMin)).
-		SetMaxPoolSize(uint64(cfg.Database.PoolMax)).
-		SetConnectTimeout(time.Duration(cfg.Database.Timeout))
+		ApplyURI(cfg.Database.URL)
+		// SetMinPoolSize(uint64(cfg.Database.PoolMin)).
+		// SetMaxPoolSize(uint64(cfg.Database.PoolMax)).
+		// SetConnectTimeout(time.Duration(cfg.Database.Timeout))
 
 	client, err := mongo.Connect(ctx, options)
 	if err != nil {

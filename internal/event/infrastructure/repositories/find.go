@@ -43,3 +43,9 @@ func (repo *EventMongoDB) FindById(id primitive.ObjectID) (*models.Event, error)
 
 	return event, nil
 }
+
+func (repo *EventMongoDB) Count() int64 {
+	totalCount, _ := repo.collection.CountDocuments(context.Background(), bson.M{})
+
+	return totalCount
+}
