@@ -8,5 +8,5 @@ import (
 type EventApplication interface {
 	Create(eventRequest *models.CreateEventRequest) error
 	FindById(id string) (*models.Event, error)
-	FindByPagination(query *util.PaginationParamsStruct) (*[]models.Event, error)
+	FindByPagination(query *util.PaginationParamsStruct) (*util.PaginationResStruct, error)
 }

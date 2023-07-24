@@ -17,7 +17,7 @@ func (hdl *EventHdl) FindEventWithPagination(ctx *fiber.Ctx) error {
 		)
 	}
 
-	return ctx.Status(fiber.StatusCreated).JSON(
+	return ctx.Status(fiber.StatusOK).JSON(
 		util.SuccessRes(events, fiber.StatusOK),
 	)
 }
