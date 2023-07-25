@@ -16,6 +16,7 @@ func (repo *EventMongoDB) FindByPagination(query *util.PaginationParamsStruct) (
 	opts := options.Find()
 	opts.SetLimit(int64(query.Limit))
 	opts.SetSkip(int64(query.Skip))
+	opts.SetSort(bson.D{{Key: "createdAt", Value: query.Sort}})
 
 	filter := bson.M{}
 	if query.Search != "" {
