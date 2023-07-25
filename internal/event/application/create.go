@@ -26,6 +26,10 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 
 	exist, err := app.repo.FindByTitle(event.Title)
 
+	if err != nil {
+		return err
+	}
+
 	if exist != nil {
 		msg := fmt.Sprintf("Title %s already used", event.Title)
 		return errors.New(msg)

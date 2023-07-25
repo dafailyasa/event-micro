@@ -20,7 +20,7 @@ type CreateEventRequest struct {
 func (e *CreateEventRequest) Validate() []error {
 	var errors []error
 
-	if isValid := util.IsValidStringWithLength(e.Title, 5); isValid == false {
+	if !util.IsValidStringWithLength(e.Title, 5) {
 		errors = append(errors, customErr.ErrTitleEvent)
 	}
 
