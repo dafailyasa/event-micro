@@ -14,13 +14,16 @@ type PaginationParamsStruct struct {
 	Skip   int
 }
 
+type MetaPaginationStruct struct {
+	LastPage    int   `json:"lastPage"`
+	CurrentPage int   `json:"currentPage"`
+	ResultCount int64 `json:"resultCount"`
+	Total       int64 `json:"total"`
+	Limit       int   `json:"limit"`
+}
 type PaginationResStruct struct {
-	Data        interface{} `json:"data"`
-	LastPage    int         `json:"lastPage"`
-	CurrentPage int         `json:"currentPage"`
-	ResultCount int64       `json:"resultCount"`
-	Total       int64       `json:"total"`
-	Limit       int         `json:"limit"`
+	Data interface{}          `json:"data"`
+	Meta MetaPaginationStruct `json:"meta"`
 }
 
 func QueryPaginationParams(ctx *fiber.Ctx) *PaginationParamsStruct {
@@ -44,11 +47,13 @@ func TransformPaginationRes(data interface{}, resultCount int64, total int64, qu
 	lastPage := math.Ceil(float64(resultCount) / float64(query.Limit))
 
 	return &PaginationResStruct{
-		Data:        data,
-		LastPage:    int(lastPage),
-		CurrentPage: query.Page,
-		ResultCount: resultCount,
-		Total:       total,
-		Limit:       query.Limit,
+		Data: data,
+		Meta: MetaPaginationStruct{
+			LastPage:    int(lastPage),
+			CurrentPage: query.Page,
+			ResultCount: resultCount,
+			Total:       total,
+			Limit:       query.Limit,
+		},
 	}
 }
