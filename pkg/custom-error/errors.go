@@ -47,6 +47,8 @@ var (
 	ErrPasswordFormat = errors.New("password must contain at least one uppercase letter, one lowercase letter, one number and one special character")
 	// ErrTitleEvent is return when a title event is not valid
 	ErrTitleEvent = errors.New("title mus be at least 7 characters and should not empty")
+	// ErrImagesEvent is return when a desc event is not valid
+	ErrImagesEvent = errors.New("images mus be at least 1 data and should not empty")
 	// ErrDescEvent is return when a desc event is not valid
 	ErrDescEvent = errors.New("description mus be at least 10 characters and should not empty")
 )
