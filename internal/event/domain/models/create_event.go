@@ -32,7 +32,7 @@ func (e *CreateEventRequest) Validate() []error {
 		errors = append(errors, customErr.ErrDescEvent)
 	}
 
-	if len(errors) > 1 {
+	if len(errors) >= 1 {
 		return errors
 	}
 
