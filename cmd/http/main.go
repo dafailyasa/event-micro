@@ -1,11 +1,14 @@
 package main
 
 import (
+	"time"
+
 	"github.com/dafailyasa/event-micro/pkg/factories"
 	"github.com/dafailyasa/event-micro/pkg/server"
 )
 
 func main() {
+	time.LoadLocation("Asia/Jakarta")
 	factory := factories.NewFactory(
 		"./logs/log.csv",
 		"./config/env.json",
