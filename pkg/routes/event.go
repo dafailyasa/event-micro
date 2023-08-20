@@ -10,4 +10,5 @@ func Event(app fiber.Router, handler eventHdl.EventHandlers) {
 	prefix.Post("", handler.Create)
 	prefix.Get("/search", handler.FindEventWithPagination)
 	prefix.Get("/:id", handler.FindById)
+	prefix.Patch("/:id", handler.Update)
 }

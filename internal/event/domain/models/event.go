@@ -17,9 +17,9 @@ type Event struct {
 	Status      util.StatusTicket  `json:"status" bson:"status"`
 	StartDate   time.Time          `json:"startDate" bson:"startDate"`
 	EndDate     time.Time          `json:"endDate" bson:"endDate"`
-	Creator     Creator            `json:"creator" bson:"creator,omitempty"`
-	CreatedAt   time.Time          `json:"createdAt" bson:"createdAt,omitempty"`
-	UpdatedAt   time.Time          `json:"UpdatedAt" bson:"UpdatedAt,omitempty"`
+	Creator     Creator            `json:"creator" bson:"creator"`
+	CreatedAt   time.Time          `json:"createdAt" bson:"createdAt"`
+	UpdatedAt   time.Time          `json:"UpdatedAt" bson:"UpdatedAt"`
 }
 
 type Creator struct {
