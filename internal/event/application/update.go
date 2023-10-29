@@ -2,13 +2,18 @@ package application
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/dafailyasa/event-micro/internal/event/domain/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
+func (app *EventApp) Update(createReq *models.UpdateEventRequest, id string) (*models.Event, error) {
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, errors.New("Invalid ObjectID format")
+	}
+
 	event := &models.Event{
 		Title:       createReq.Title,
 		Images:      createReq.Images,
@@ -17,30 +22,18 @@ func (app *EventApp) Create(createReq *models.CreateEventRequest) error {
 		Status:      createReq.Status,
 		StartDate:   createReq.StartDate,
 		EndDate:     createReq.EndDate,
-		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 	}
 
 	if err := app.validator.Struct(event); err != nil {
-		return err
+		return nil, err
 	}
 
-	exist, err := app.repo.FindByTitle(event.Title)
-
+	event, err = app.repo.Update(objectId, event)
 	if err != nil {
-		return err
+		app.logger.Error("Failed to update event", err)
+		return nil, err
 	}
 
-	if exist != nil {
-		msg := fmt.Sprintf("Title %s already used", event.Title)
-		return errors.New(msg)
-	}
-
-	err = app.repo.Save(event)
-	if err != nil {
-		app.logger.Error("Failed to save event", err)
-		return err
-	}
-
-	return nil
+	return event, nil
 }

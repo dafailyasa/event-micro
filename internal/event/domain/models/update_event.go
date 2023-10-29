@@ -7,7 +7,7 @@ import (
 	util "github.com/dafailyasa/event-micro/pkg/utils"
 )
 
-type CreateEventRequest struct {
+type UpdateEventRequest struct {
 	Title       string            `json:"title" validate:"required"`
 	Images      []string          `json:"images" validate:"required"`
 	Description string            `json:"description" validate:"required"`
@@ -17,7 +17,7 @@ type CreateEventRequest struct {
 	EndDate     time.Time         `json:"endDate" validate:"required"`
 }
 
-func (e *CreateEventRequest) Validate() []error {
+func (e *UpdateEventRequest) Validate() []error {
 	var errors []error
 
 	if !util.IsValidStringWithLength(e.Title, 5) {

@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/dafailyasa/event-micro/pkg/config/domain/ports"
+	"github.com/dafailyasa/event-micro/pkg/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -39,10 +40,7 @@ func (s *Server) Run(port string, appName string) error {
 	app.Get("/metrics", monitor.New(monitor.Config{Title: cfg.App.Name + " Metrics"}))
 	prefix := app.Group(cfg.App.BaseURL)
 
-	event := prefix.Group("event")
-	event.Post("", s.event.Create)
-	event.Get("/search", s.event.FindEventWithPagination)
-	event.Get("/:id", s.event.FindById)
+	routes.Event(prefix, s.event)
 
 	err = app.Listen(":" + port)
 	if err != nil {
