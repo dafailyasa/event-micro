@@ -12,5 +12,5 @@ type EventRepository interface {
 	FindById(id primitive.ObjectID) (*models.Event, error)
 	FindByPagination(query *util.PaginationParamsStruct) (*[]models.Event, int64, error)
 	Count() int64
-	Update(id primitive.ObjectID, event *models.UpdateEventRequest) error
+	Update(id primitive.ObjectID, event *models.Event) (*models.Event, error)
 }
