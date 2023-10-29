@@ -20,18 +20,16 @@ func (repo *EventMongoDB) Update(id primitive.ObjectID, event *models.Event) (*m
 		context.Background(),
 		bson.M{"_id": id},
 		bson.D{
-			{
-				"$set", bson.M{
-					"title":       event.Title,
-					"images":      event.Images,
-					"description": event.Description,
-					"isActive":    event.IsActive,
-					"startDate":   event.StartDate,
-					"endDate":     event.EndDate,
-					"creator":     event.Creator,
-					"updatedAt":   event.UpdatedAt,
-				},
-			},
+			{Key: "$set", Value: bson.D{
+				{Key: "title", Value: event.Title},
+				{Key: "images", Value: event.Images},
+				{Key: "description", Value: event.Description},
+				{Key: "isActive", Value: event.IsActive},
+				{Key: "startDate", Value: event.StartDate},
+				{Key: "endDate", Value: event.EndDate},
+				{Key: "creator", Value: event.Creator},
+				{Key: "updatedAt", Value: event.UpdatedAt},
+			}},
 		},
 		opts,
 	)
